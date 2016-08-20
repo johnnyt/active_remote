@@ -7,6 +7,7 @@ module ActiveRemote
 
       self.default_cache_key_updated_at = false
       self.include_root_in_json = true
+      self.adapter = :rpc
     end
 
     def default_cache_key_updated_at?

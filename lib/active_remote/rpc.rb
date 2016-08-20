@@ -88,23 +88,21 @@ module ActiveRemote
       end
 
       def rpc_adapter
-        # TODO: Make this pluggable
-        #
-        # raise(AdapterNotSpecified, "configuration does not specify adapter") unless adapter.present?
-        #
-        # path_to_adapter = "active_remote/rpc_adapters/#{adapter}_adapter"
-        #
-        # begin
-        #   require path_to_adapter
-        # rescue Gem::LoadError => e
-        #   raise Gem::LoadError, "Specified '#{adapter]}' for RPC adapter, but the gem is not loaded. Add `gem '#{e.name}'` to your Gemfile (and ensure its version is at the minimum required by ActiveRemote)."
-        # rescue LoadError => e
-        #   raise LoadError, "Could not load '#{path_to_adapter}'. Make sure that the adapter is valid. If you use an adapter other than 'protobuf' add the necessary adapter gem to the Gemfile.", e.backtrace
-        # end
-        #
-        # path_to_adapter.classify.constantize
+        adapter = ActiveRemote.config.adapter.to_s
 
-        RPCAdapters::ProtobufAdapter
+        path_to_adapter = "active_remote/rpc_adapters/#{adapter}_adapter"
+
+        begin
+          require path_to_adapter
+        rescue Gem::LoadError => e
+          raise Gem::LoadError, "Specified '#{adapter}' for RPC adapter, but the gem is not loaded. Add `gem '#{e.name}'` to your Gemfile (and ensure its version is at the minimum required by ActiveRemote)."
+        rescue LoadError => e
+          raise LoadError, "Could not load '#{path_to_adapter}'. Make sure that the adapter is valid. If you use an adapter other than 'protobuf' add the necessary adapter gem to the Gemfile.", e.backtrace
+        end
+
+        "ActiveRemote::RPCAdapters::#{adapter.classify}Adapter".constantize
+
+        #RPCAdapters::ProtobufAdapter
       end
     end
 

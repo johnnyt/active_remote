@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   ##
   # Development Dependencies
   #
+  s.add_development_dependency "httparty"
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec", ">= 3.3.0"
   s.add_development_dependency "rspec-its"
@@ -33,4 +34,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "pry"
   s.add_development_dependency "protobuf-rspec", ">= 1.1.2"
   s.add_development_dependency "simplecov"
+  s.add_development_dependency "sinatra"
 end
